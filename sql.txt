@@ -1,0 +1,4 @@
+1. create schema pandemic;
+use pandemic;
+
+2. CREATE TABLE countries (id INT AUTO_INCREMENT PRIMARY KEY, country_name VARCHAR(255), country_code VARCHAR(255));
