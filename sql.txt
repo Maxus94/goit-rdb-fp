@@ -1,4 +1,19 @@
 1. create schema pandemic;
 use pandemic;
 
-2. CREATE TABLE countries (id INT AUTO_INCREMENT PRIMARY KEY, country_name VARCHAR(255), country_code VARCHAR(255));
+
+
+2. CREATE TABLE countries (id INT AUTO_INCREMENT PRIMARY KEY, Entity TEXT, `Code` TEXT);
+
+CREATE TABLE diseases (id INT AUTO_INCREMENT PRIMARY KEY, Entity TEXT, `Year` INT, Number_yaws TEXT, polio_cases INT, cases_guinea_worm INT, 
+Number_rabies TEXT, Number_malaria TEXT, Number_hiv TEXT, Number_tuberculosis TEXT, Number_smallpox TEXT, Number_cholera_cases TEXT);
+
+INSERT INTO diseases (Entity, `Year`, Number_yaws, polio_cases, cases_guinea_worm, 
+Number_rabies, Number_malaria, Number_hiv, Number_tuberculosis, Number_smallpox, Number_cholera_cases)
+SELECT DISTINCT Entity, `Year`, Number_yaws, polio_cases, cases_guinea_worm, 
+Number_rabies, Number_malaria, Number_hiv, Number_tuberculosis, Number_smallpox, Number_cholera_cases FROM infectious_cases;
+
+
+INSERT INTO countries (Entity, `Code`)
+SELECT DISTINCT Entity, `Code` FROM infectious_cases;
+
