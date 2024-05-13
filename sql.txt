@@ -38,3 +38,70 @@ group by country_id order by Rabies_avg desc limit 10;
 SELECT distinct `Year`, makedate(`Year`, 1) as `Date`, CURDATE() as Current_day, 
 timestampdiff(YEAR, makedate(`Year`, 1), CURDATE()) as Difference 
 from diseases;
+
+
+5. 
+DELIMITER //
+
+DROP FUNCTION IF EXISTS Make_difference;
+
+CREATE FUNCTION Make_difference(year_num int)
+
+RETURNS INT
+
+
+NO SQL
+
+BEGIN
+
+    DECLARE difference INT;
+
+    SET difference = timestampdiff(YEAR, makedate(year_num, 1), CURDATE());
+
+    RETURN difference;
+
+END //
+
+
+DELIMITER ;
+
+
+
+
+SELECT distinct `Year`, 
+Make_difference(`Year`) as Difference 
+from diseases;
+
+
+
+DELIMITER //
+
+DROP FUNCTION IF EXISTS Count_average;
+
+CREATE FUNCTION Count_average(diseases_num double, months_num int)
+
+RETURNS Double
+DETERMINISTIC 
+
+NO SQL
+
+BEGIN
+
+    DECLARE average_dis Double;
+
+    SET average_dis = diseases_num/months_num;
+
+    RETURN average_dis;
+
+END //
+
+
+DELIMITER ;
+
+
+SELECT `Year`, SUM(Number_rabies) as Rabies_total, Count_average(SUM(Number_rabies), 4), 
+
+Count_average(SUM(Number_rabies), 12) as Rabies_per_month from diseases where Number_rabies!=''
+
+group by `Year`
+order by `Year` asc;
