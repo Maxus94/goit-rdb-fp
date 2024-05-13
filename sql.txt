@@ -34,4 +34,7 @@ FROM (select * from diseases where Number_rabies!='') as temp_table
 group by country_id order by Rabies_avg desc limit 10;
 
 
-
+4. USE pandemic;
+SELECT distinct `Year`, makedate(`Year`, 1) as `Date`, CURDATE() as Current_day, 
+timestampdiff(YEAR, makedate(`Year`, 1), CURDATE()) as Difference 
+from diseases;
